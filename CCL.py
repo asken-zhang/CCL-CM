@@ -125,7 +125,7 @@ class SENN(nn.Module):
         return concept_encoder, concept_decoder, relevance, out
     def explainability(self, x,targets,criterion):
         x.requires_grad = True
-        # 前向传播，获取分类结果和注意力输出
+        # Forward propagation, obtaining classification results and attention output
         concept_encoder, concept_decoder = self.concept_autoencoder(x)
         ## relevance parametrizer
         relevance = self.relevance_parametrizer(x)
@@ -133,11 +133,11 @@ class SENN(nn.Module):
         ## aggregator
         output = self.aggregator(concept_encoder, relevance)
 
-        # 计算损失
+        # Calculate loss function
         loss = criterion(output, targets)
         loss.backward()
 
-        # 获取输入的梯度
+        # Obtain the gradients
         gradients = x.grad
 
         return gradients
