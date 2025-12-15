@@ -137,7 +137,7 @@ def main():
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2470, 0.2435, 0.2616)),  # CIFAR-10的均值和标准差
         ])
 
-        # 加载 CIFAR-10 数据集
+
         trainset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
         valset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
         class_num = len(trainset.classes)
@@ -148,7 +148,7 @@ def main():
             transforms.Normalize((0.5,), (0.5,))  # Fashion-MNIST的均值和标准差（假设）
         ])
 
-        # 加载 FashionMNIST 数据集
+        
         trainset = datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)
         valset = datasets.FashionMNIST(root='./data', train=False, download=True, transform=transform)
         class_num = len(trainset.classes)

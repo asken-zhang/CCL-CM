@@ -113,14 +113,14 @@ class SSIMLossForSequence(nn.Module):
 
         ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2))
         if conf is not None:
-            # 把 conf 插值到和 ssim_map 同样长度（简单重复或线性插值均可）
+            # Interpolation of conf to the same length as ssim_map
             if conf.size(-1) != ssim_map.size(-1):
                 conf = F.interpolate(conf.unsqueeze(1).float(),
                                      size=ssim_map.size(-1),
                                      mode='linear',
                                      align_corners=False).squeeze(1)
             omega_r = 1.0 / (1.0 + torch.exp(-gamma * conf))  # (B, L')
-            # 对 omega_r 归一化，防止 batch 间尺度不一致
+            # Normalize omega_r to prevent batch scale inconsistency
             omega_r = omega_r / omega_r.sum(dim=-1, keepdim=True)
             score = (ssim_map * omega_r.unsqueeze(1)).sum(dim=-1)  # 加权求和
         else:
@@ -139,14 +139,14 @@ class SSIMLossForSequence(nn.Module):
         return 1 - self.ssim(seq1, seq2,device)
 
 
-# 示例用法
+# Example usage
 if __name__ == "__main__":
     ssim_loss = SSIMLossForSequence(window_size=11, size_average=True)
 
-    # 两个示例时间序列，形状：(batch_size, sequence_length)
+    # Two example time series, shape:(batch_size, sequence_length)
     seq1 = torch.rand((4, 100)).cuda()  # batch大小为4，序列长度为100
     seq2 = torch.rand((4, 100)).cuda()
     device = torch.device("cuda")
-    # 计算 SSIM 损失
+    # Calculate SSIM loss
     loss = ssim_loss(seq1, seq2,device)
     print(f'SSIM Loss for Sequence: {loss.item()}')
