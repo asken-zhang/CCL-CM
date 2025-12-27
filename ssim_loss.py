@@ -59,14 +59,14 @@ from scipy.ndimage import gaussian_filter
 #     ssim_loss = SSIMLoss(window_size=11, size_average=True)
 #
 #     # Two example time series, shape：(batch_size, channel, height, width)
-#     img1 = torch.rand((1, 1, 256, 256))  # 单通道灰度图像
+#     img1 = torch.rand((1, 1, 256, 256))  # gray
 #     img2 = torch.rand((1, 1, 256, 256))
 #
 #     # Calculate SSIM loss
 #     loss = ssim_loss(img1, img2)
 #     print(f'SSIM Loss (Single Channel): {loss.item()}')
 #
-#     img1_rgb = torch.rand((1, 3, 256, 256))  # 三通道 RGB 图像
+#     img1_rgb = torch.rand((1, 3, 256, 256))  #  RGB 
 #     img2_rgb = torch.rand((1, 3, 256, 256))
 #
 #     # Calculate SSIM loss
@@ -122,7 +122,7 @@ class SSIMLossForSequence(nn.Module):
             omega_r = 1.0 / (1.0 + torch.exp(-gamma * conf))  # (B, L')
             # Normalize omega_r to prevent batch scale inconsistency
             omega_r = omega_r / omega_r.sum(dim=-1, keepdim=True)
-            score = (ssim_map * omega_r.unsqueeze(1)).sum(dim=-1)  # 加权求和
+            score = (ssim_map * omega_r.unsqueeze(1)).sum(dim=-1)  # weighted sum
         else:
             score = ssim_map.mean(-1) if not self.size_average else ssim_map.mean()
 
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     ssim_loss = SSIMLossForSequence(window_size=11, size_average=True)
 
     # Two example time series, shape:(batch_size, sequence_length)
-    seq1 = torch.rand((4, 100)).cuda()  # batch大小为4，序列长度为100
+    seq1 = torch.rand((4, 100)).cuda()  # batch_size = 4，sequence_length = 100
     seq2 = torch.rand((4, 100)).cuda()
     device = torch.device("cuda")
     # Calculate SSIM loss
