@@ -54,22 +54,22 @@ from scipy.ndimage import gaussian_filter
 #         return 1 - self.ssim(img1, img2)
 #
 #
-# # 示例用法
+# # Example usage
 # if __name__ == "__main__":
 #     ssim_loss = SSIMLoss(window_size=11, size_average=True)
 #
-#     # 两个示例图像，形状：(batch_size, channel, height, width)
+#     # Two example time series, shape：(batch_size, channel, height, width)
 #     img1 = torch.rand((1, 1, 256, 256))  # 单通道灰度图像
 #     img2 = torch.rand((1, 1, 256, 256))
 #
-#     # 计算 SSIM 损失
+#     # Calculate SSIM loss
 #     loss = ssim_loss(img1, img2)
 #     print(f'SSIM Loss (Single Channel): {loss.item()}')
 #
 #     img1_rgb = torch.rand((1, 3, 256, 256))  # 三通道 RGB 图像
 #     img2_rgb = torch.rand((1, 3, 256, 256))
 #
-#     # 计算 SSIM 损失
+#     # Calculate SSIM loss
 #     loss_rgb = ssim_loss(img1_rgb, img2_rgb)
 #     print(f'SSIM Loss (RGB): {loss_rgb.item()}')
 
