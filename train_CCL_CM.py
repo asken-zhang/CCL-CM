@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 from ssim_loss import SSIMLossForSequence
 from CCL import SENN
 from CM import parametriser_regulariser
-from tqdm import tqdm  # 引入 tqdm
+from tqdm import tqdm
 
 def train(args, writer, model, device, trainloader, concept_opt, relevance_opt, cls_opt, cls_loss, rec_loss, epoch):
 
@@ -142,10 +142,10 @@ def main():
         valset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
         class_num = len(trainset.classes)
     elif args.dataset == 'FashionMNIST':
-        channel = 1  # fashion-mnist 是灰度图像
+        channel = 1  # Gray
         transform = transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize((0.5,), (0.5,))  # Fashion-MNIST的均值和标准差（假设）
+            transforms.Normalize((0.5,), (0.5,))  # Normalize of Fashion-MNIST
         ])
 
         
